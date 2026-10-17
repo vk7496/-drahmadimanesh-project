@@ -1,0 +1,80 @@
+/* تنظیمات عمومی */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Tahoma', 'Segoe UI', Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    direction: rtl;
+}
+
+/* کارت اصلی اپلیکیشن */
+.card {
+    background: #ffffff;
+    width: 90%;
+    max-width: 380px;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+h2 {
+    color: #1a237e;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+#userName {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.balance-title {
+    font-size: 14px;
+    color: #888;
+}
+
+/* بخش نمایش موجودی */
+.balance {
+    font-size: 28px;
+    color: #2e7d32;
+    font-weight: bold;
+    margin: 10px 0 25px 0;
+    letter-spacing: 0.5px;
+}
+
+/* دکمه اسکن */
+.btn-scan {
+    background: #0288d1;
+    color: #ffffff;
+    border: none;
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-scan:hover {
+    background: #01579b;
+}
+
+/* کادر اسکنر دوربین */
+#reader {
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px dashed #0288d1;
+}
