@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import requests
 
@@ -29,8 +30,7 @@ merchant_db = {
 ZARINPAL_MERCHANT = "00000000-0000-0000-0000-000000000000"
 ZP_REQ_URL = "https://sandbox.zarinpal.com/pg/v4/payment/request.json"
 ZP_START_PAY = "https://sandbox.zarinpal.com/pg/StartPay/"
-ZP_VERIFY_URL = "https://sandbox.zarinpal.com/pg/v4/payment/verify.json"
-CALLBACK_URL = "http://127.0.0.1:8000/api/wallet/verify"
+CALLBACK_URL = "https://replit.dev/api/wallet/verify"
 
 class PaymentRequest(BaseModel):
     merchant_code: str
@@ -43,7 +43,6 @@ class TopUpRequest(BaseModel):
 def get_user_info():
     return user_db
 
-# درخواست شارژ کیف پول و اتصال به زرین‌پال
 @app.post("/api/wallet/topup")
 def request_wallet_topup(data: TopUpRequest):
     if data.amount < 1000:
@@ -51,7 +50,7 @@ def request_wallet_topup(data: TopUpRequest):
     
     req_data = {
         "merchant_id": ZARINPAL_MERCHANT,
-        "amount": data.amount * 10, # تبدیل تومان به ریال
+        "amount": data.amount * 10,
         "callback_url": CALLBACK_URL,
         "description": "شارژ کیف پول باشگاه اعضای معجزه ذهن",
     }
@@ -71,16 +70,14 @@ def request_wallet_topup(data: TopUpRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail="خطا در ارتباط با درگاه بانکی.")
 
-# تایید پرداخت زرین‌پال (Callback)
 @app.get("/api/wallet/verify")
 def verify_wallet_topup(Authority: str, Status: str):
     if Status == "OK":
-        user_db["wallet_balance"] += 50000 # شارژ موفق تستی
+        user_db["wallet_balance"] += 50000
         return {"status": "success", "message": "شارژ کیف پول با موفقیت انجام شد!", "new_balance": user_db["wallet_balance"]}
     else:
-        return {"status": "failed", "message": "پرداخت توسط کاربر لغو شد یا با خطا مواجه گردید."}
+        return {"status": "failed", "message": "پرداخت توسط کاربر لغو شد."}
 
-# کسر از کیف پول در کافه‌ها
 @app.post("/api/pay")
 def pay_at_merchant(data: PaymentRequest):
     if data.merchant_code not in merchant_db:
@@ -95,3 +92,6 @@ def pay_at_merchant(data: PaymentRequest):
         "message": f"پرداخت با موفقیت در {merchant_db[data.merchant_code]} انجام شد.",
         "new_balance": user_db["wallet_balance"]
     }
+
+# سرو کردن کل پوشه frontend به عنوان روت سایت (باید حتماً آخر از همه باشد)
+app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
