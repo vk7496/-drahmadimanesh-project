@@ -52,6 +52,24 @@ h2 {
     letter-spacing: 0.5px;
 }
 
+/* دکمه شارژ آنلاین */
+.btn-topup {
+    background: #2e7d32;
+    color: #ffffff;
+    border: none;
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-topup:hover {
+    background: #1b5e20;
+}
+
 /* دکمه اسکن */
 .btn-scan {
     background: #0288d1;
