@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>باشگاه اعضا - معجزه ذهن</title>
     <link rel="stylesheet" href="style.css">
-    <!-- کتابخانه آیکون‌ها و اسکنر QR -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
@@ -14,7 +13,7 @@
 <!-- هدر بالا -->
 <header class="app-header">
     <div class="menu-icon" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></div>
-    <div class="brand-title">معجزه ذهن 🧠</div>
+    <div class="brand-title">باشگاه اعضای معجزه ذهن 🧠</div>
     <div class="notif-icon"><i class="fa-regular fa-bell"></i></div>
 </header>
 
@@ -22,11 +21,11 @@
 <div id="sidebar" class="sidebar">
     <div class="sidebar-header">
         <div class="avatar"><i class="fa-solid fa-user"></i></div>
-        <h3 id="sidebarUserName">در حال بارگذاری...</h3>
+        <h3 id="sidebarUserName">پریسا کاویان</h3>
         <p class="sidebar-wallet-text">موجودی کیف پول: <span id="sidebarBalance">۰ تومان</span></p>
     </div>
     <ul class="sidebar-menu">
-        <li onclick="topupWallet()"><i class="fa-solid fa-wallet"></i> شارژ آنلاین کیف پول</li>
+        <li onclick="topupWallet()"><i class="fa-solid fa-wallet"></i> شارژ کیف پول</li>
         <li><i class="fa-solid fa-book-open"></i> دوره‌های آموزشی من</li>
         <li><i class="fa-solid fa-star"></i> پیشنهادهای ویژه</li>
         <li><i class="fa-solid fa-headphones"></i> پادکست‌ها و همایش‌ها</li>
@@ -35,10 +34,10 @@
 </div>
 <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
 
-<!-- محتوای اصلی صفحه -->
+<!-- محتوای اصلی -->
 <main class="main-container">
 
-    <!-- بنر تبلیغاتی بالای صفحه -->
+    <!-- بنر تبلیغاتی -->
     <div class="hero-banner">
         <div class="banner-text">
             <h4>دوره‌های تخصصی رشد فردی</h4>
@@ -46,7 +45,7 @@
         </div>
     </div>
 
-    <!-- بخش کارت کیف پول و موجودی (بخش اصلی مالی) -->
+    <!-- کارت کیف پول -->
     <div class="wallet-card-box">
         <div class="wallet-header-row">
             <span><i class="fa-solid fa-wallet"></i> کیف پول اعضا</span>
@@ -57,14 +56,13 @@
             <button class="btn-primary" onclick="topupWallet()"><i class="fa-solid fa-plus-circle"></i> شارژ کیف پول</button>
             <button class="btn-secondary" onclick="startScanner()"><i class="fa-solid fa-qrcode"></i> اسکن کافه / رستوران</button>
         </div>
-        <!-- کادر دوربین اسکنر -->
         <div id="reader"></div>
     </div>
 
-    <!-- شبکه آیکون‌های دسترسی سریع (مشابه ویدیو) -->
+    <!-- دسترسی سریع -->
     <div class="section-title">دسترسی سریع</div>
     <div class="grid-menu">
-        <div class="grid-item" onclick="alert('بخش دوره‌ها')">
+        <div class="grid-item" onclick="alert('بخش دوره‌های من')">
             <i class="fa-solid fa-graduation-cap"></i>
             <span>دوره‌های من</span>
         </div>
@@ -76,7 +74,7 @@
             <i class="fa-solid fa-microphone-lines"></i>
             <span>پادکست</span>
         </div>
-        <div class="grid-item" onclick="alert('اساتید')">
+        <div class="grid-item" onclick="alert('اساتید برتر')">
             <i class="fa-solid fa-chalkboard-user"></i>
             <span>اساتید</span>
         </div>
@@ -84,13 +82,13 @@
             <i class="fa-solid fa-wallet"></i>
             <span>کیف پول</span>
         </div>
-        <div class="grid-item" onclick="alert('پشتیبانی')">
+        <div class="grid-item" onclick="alert('پشتیبانی آنلاین')">
             <i class="fa-solid fa-headset"></i>
             <span>پشتیبانی</span>
         </div>
     </div>
 
-    <!-- دسته‌بندی دوره‌ها (محتوای نمایشی جذاب) -->
+    <!-- دوره‌های محبوب -->
     <div class="section-title">دوره‌های محبوب معجزه ذهن</div>
     <div class="courses-carousel">
         <div class="course-card">
@@ -111,7 +109,7 @@
 
 </main>
 
-<!-- منوی پایین صفحه (Bottom Nav) -->
+<!-- منوی پایین -->
 <nav class="bottom-nav">
     <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i><span>خانه</span></a>
     <a href="#" class="nav-item" onclick="topupWallet()"><i class="fa-solid fa-wallet"></i><span>کیف پول</span></a>
