@@ -17,7 +17,7 @@ app.add_middleware(
 # دیتابیس آزمایشی در حافظه
 user_db = {
     "user_id": 1,
-    "name": "مخاطب ویژه معجزه ذهن",
+    "name": "پریسا کاویان",
     "wallet_balance": 1000000
 }
 
@@ -93,5 +93,5 @@ def pay_at_merchant(data: PaymentRequest):
         "new_balance": user_db["wallet_balance"]
     }
 
-# سرو کردن کل پوشه frontend به عنوان روت سایت (باید حتماً آخر از همه باشد)
+# سرو کردن کل پوشه frontend به صورت مستقیم
 app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
