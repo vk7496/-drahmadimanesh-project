@@ -5,22 +5,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>باشگاه اعضا - معجزه ذهن</title>
     <link rel="stylesheet" href="style.css">
+    <!-- کتابخانه آیکون‌ها و اسکنر QR -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body>
 
-<div class="card">
-    <h2>🧠 باشگاه اعضای معجزه ذهن</h2>
-    <p id="userName">در حال دریافت اطلاعات...</p>
-    
-    <div class="balance-title">موجودی کیف پول:</div>
-    <div class="balance" id="balance">۰ تومان</div>
+<!-- هدر بالا -->
+<header class="app-header">
+    <div class="menu-icon" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></div>
+    <div class="brand-title">معجزه ذهن 🧠</div>
+    <div class="notif-icon"><i class="fa-regular fa-bell"></i></div>
+</header>
 
-    <button class="btn-topup" onclick="topupWallet()">💳 شارژ آنلاین کیف پول</button>
-    <button class="btn-scan" onclick="startScanner()" style="margin-top: 10px;">📷 اسکن QR کد کافه / رستوران</button>
-    
-    <div id="reader"></div>
+<!-- منوی کشویی (Sidebar) -->
+<div id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <div class="avatar"><i class="fa-solid fa-user"></i></div>
+        <h3 id="sidebarUserName">در حال بارگذاری...</h3>
+        <p class="sidebar-wallet-text">موجودی کیف پول: <span id="sidebarBalance">۰ تومان</span></p>
+    </div>
+    <ul class="sidebar-menu">
+        <li onclick="topupWallet()"><i class="fa-solid fa-wallet"></i> شارژ آنلاین کیف پول</li>
+        <li><i class="fa-solid fa-book-open"></i> دوره‌های آموزشی من</li>
+        <li><i class="fa-solid fa-star"></i> پیشنهادهای ویژه</li>
+        <li><i class="fa-solid fa-headphones"></i> پادکست‌ها و همایش‌ها</li>
+        <li><i class="fa-solid fa-headset"></i> پشتیبانی آنلاین</li>
+    </ul>
 </div>
+<div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
+
+<!-- محتوای اصلی صفحه -->
+<main class="main-container">
+
+    <!-- بنر تبلیغاتی بالای صفحه -->
+    <div class="hero-banner">
+        <div class="banner-text">
+            <h4>دوره‌های تخصصی رشد فردی</h4>
+            <p>دسترسی سریع به کلکسیون آموزشی معجزه ذهن</p>
+        </div>
+    </div>
+
+    <!-- بخش کارت کیف پول و موجودی (بخش اصلی مالی) -->
+    <div class="wallet-card-box">
+        <div class="wallet-header-row">
+            <span><i class="fa-solid fa-wallet"></i> کیف پول اعضا</span>
+            <span class="active-badge">فعال</span>
+        </div>
+        <div class="balance-amount" id="balance">۰ تومان</div>
+        <div class="wallet-actions">
+            <button class="btn-primary" onclick="topupWallet()"><i class="fa-solid fa-plus-circle"></i> شارژ کیف پول</button>
+            <button class="btn-secondary" onclick="startScanner()"><i class="fa-solid fa-qrcode"></i> اسکن کافه / رستوران</button>
+        </div>
+        <!-- کادر دوربین اسکنر -->
+        <div id="reader"></div>
+    </div>
+
+    <!-- شبکه آیکون‌های دسترسی سریع (مشابه ویدیو) -->
+    <div class="section-title">دسترسی سریع</div>
+    <div class="grid-menu">
+        <div class="grid-item" onclick="alert('بخش دوره‌ها')">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>دوره‌های من</span>
+        </div>
+        <div class="grid-item" onclick="alert('بخش همایش‌ها')">
+            <i class="fa-solid fa-video"></i>
+            <span>همایش‌ها</span>
+        </div>
+        <div class="grid-item" onclick="alert('پادکست‌ها')">
+            <i class="fa-solid fa-microphone-lines"></i>
+            <span>پادکست</span>
+        </div>
+        <div class="grid-item" onclick="alert('اساتید')">
+            <i class="fa-solid fa-chalkboard-user"></i>
+            <span>اساتید</span>
+        </div>
+        <div class="grid-item" onclick="topupWallet()">
+            <i class="fa-solid fa-wallet"></i>
+            <span>کیف پول</span>
+        </div>
+        <div class="grid-item" onclick="alert('پشتیبانی')">
+            <i class="fa-solid fa-headset"></i>
+            <span>پشتیبانی</span>
+        </div>
+    </div>
+
+    <!-- دسته‌بندی دوره‌ها (محتوای نمایشی جذاب) -->
+    <div class="section-title">دوره‌های محبوب معجزه ذهن</div>
+    <div class="courses-carousel">
+        <div class="course-card">
+            <div class="course-img bg-1"></div>
+            <div class="course-info">
+                <h5>تکنیک‌های پیشرفته ذهنی</h5>
+                <p class="free-tag">رایگان اعضا</p>
+            </div>
+        </div>
+        <div class="course-card">
+            <div class="course-img bg-2"></div>
+            <div class="course-info">
+                <h5>قوانین بی‌نهایت ثروت</h5>
+                <p class="price-tag">ویژه باشگاه</p>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- منوی پایین صفحه (Bottom Nav) -->
+<nav class="bottom-nav">
+    <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i><span>خانه</span></a>
+    <a href="#" class="nav-item" onclick="topupWallet()"><i class="fa-solid fa-wallet"></i><span>کیف پول</span></a>
+    <a href="#" class="nav-item" onclick="toggleSidebar()"><i class="fa-solid fa-user"></i><span>پروفایل</span></a>
+</nav>
 
 <script src="app.js"></script>
 </body>
