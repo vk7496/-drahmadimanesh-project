@@ -1,18 +1,27 @@
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = ""; // خالی برای هم‌خوانی با روت ریپلیت
 
-// ۱. دریافت اطلاعات کاربر و موجودی از بک‌اند
+// باز و بسته کردن منوی کشویی
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('active');
+    document.getElementById('overlay').classList.toggle('active');
+}
+
+// دریافت اطلاعات کاربر و موجودی از بک‌اند
 async function fetchUser() {
     try {
         const res = await fetch(`${API_URL}/api/user`);
         const data = await res.json();
-        document.getElementById('userName').innerText = data.name;
+        
+        // به‌روزرسانی نام و موجودی در صفحه اصلی و منوی کشویی
         document.getElementById('balance').innerText = data.wallet_balance.toLocaleString() + " تومان";
+        document.getElementById('sidebarUserName').innerText = data.name;
+        document.getElementById('sidebarBalance').innerText = data.wallet_balance.toLocaleString() + " تومان";
     } catch (e) {
-        document.getElementById('userName').innerText = "خطا در اتصال به سرور بک‌اند!";
+        console.error("خطا در دریافت اطلاعات کاربر:", e);
     }
 }
 
-// ۲. شارژ آنلاین کیف پول از طریق درگاه زرین‌پال
+// شارژ آنلاین کیف پول از طریق درگاه زرین‌پال
 async function topupWallet() {
     const amount = prompt("مبلغ شارژ مورد نظر را به تومان وارد کنید:", "50000");
     if (!amount) return;
@@ -28,28 +37,30 @@ async function topupWallet() {
         if (res.ok && result.payment_url) {
             window.location.href = result.payment_url;
         } else {
-            alert("خطا: " + result.detail);
+            alert("خطا: " + (result.detail || "مشکل در درگاه پرداخت"));
         }
     } catch (e) {
-        alert("خطا در اتصال به درگاه پرداخت!");
+        alert("خطا در ارتباط با سرور پرداخت!");
     }
 }
 
-// ۳. شروع اسکنر دوربین گوشی / لپ‌تاپ
+// راه‌اندازی اسکنر QR کد
 function startScanner() {
     const html5QrCode = new Html5Qrcode("reader");
     html5QrCode.start(
         { facingMode: "environment" },
-        { fps: 10, qrbox: 250 },
+        { fps: 10, qrbox: 200 },
         async (qrCodeMessage) => {
             html5QrCode.stop();
             processPayment(qrCodeMessage);
         },
         (errorMessage) => { }
-    );
+    ).catch(err => {
+        alert("خطا در دسترسی به دوربین گوشی!");
+    });
 }
 
-// ۴. پردازش پرداخت و کسر از کیف پول
+// پردازش پرداخت در کافه / رستوران
 async function processPayment(merchantCode) {
     const amount = prompt("مبلغ فاکتور را وارد کنید (تومان):", "50000");
     if (!amount) return;
@@ -68,7 +79,7 @@ async function processPayment(merchantCode) {
 
         if (res.ok) {
             alert(result.message);
-            document.getElementById('balance').innerText = result.new_balance.toLocaleString() + " تومان";
+            fetchUser(); // به‌روزرسانی موجودی
         } else {
             alert("خطا: " + result.detail);
         }
@@ -77,5 +88,5 @@ async function processPayment(merchantCode) {
     }
 }
 
-// اجرا به محض باز شدن صفحه
+// اجرای اولیه هنگام لود صفحه
 fetchUser();
