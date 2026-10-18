@@ -1,18 +1,15 @@
-const API_URL = ""; // خالی برای هم‌خوانی با روت ریپلیت
+const API_URL = "";
 
-// باز و بسته کردن منوی کشویی
 function toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('active');
     document.getElementById('overlay').classList.toggle('active');
 }
 
-// دریافت اطلاعات کاربر و موجودی از بک‌اند
 async function fetchUser() {
     try {
         const res = await fetch(`${API_URL}/api/user`);
         const data = await res.json();
         
-        // به‌روزرسانی نام و موجودی در صفحه اصلی و منوی کشویی
         document.getElementById('balance').innerText = data.wallet_balance.toLocaleString() + " تومان";
         document.getElementById('sidebarUserName').innerText = data.name;
         document.getElementById('sidebarBalance').innerText = data.wallet_balance.toLocaleString() + " تومان";
@@ -21,7 +18,6 @@ async function fetchUser() {
     }
 }
 
-// شارژ آنلاین کیف پول از طریق درگاه زرین‌پال
 async function topupWallet() {
     const amount = prompt("مبلغ شارژ مورد نظر را به تومان وارد کنید:", "50000");
     if (!amount) return;
@@ -44,7 +40,6 @@ async function topupWallet() {
     }
 }
 
-// راه‌اندازی اسکنر QR کد
 function startScanner() {
     const html5QrCode = new Html5Qrcode("reader");
     html5QrCode.start(
@@ -60,7 +55,6 @@ function startScanner() {
     });
 }
 
-// پردازش پرداخت در کافه / رستوران
 async function processPayment(merchantCode) {
     const amount = prompt("مبلغ فاکتور را وارد کنید (تومان):", "50000");
     if (!amount) return;
@@ -79,7 +73,7 @@ async function processPayment(merchantCode) {
 
         if (res.ok) {
             alert(result.message);
-            fetchUser(); // به‌روزرسانی موجودی
+            fetchUser();
         } else {
             alert("خطا: " + result.detail);
         }
@@ -88,5 +82,4 @@ async function processPayment(merchantCode) {
     }
 }
 
-// اجرای اولیه هنگام لود صفحه
 fetchUser();
