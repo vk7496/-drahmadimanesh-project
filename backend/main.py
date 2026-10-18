@@ -26,7 +26,7 @@ merchant_db = {
 }
 
 # تنظیمات درگاه زرین‌پال (آزمایشی Sandbox)
-ZARINPAL_MERCHANT = "00000000-0000-0000-0000-000000000000" # کد تست
+ZARINPAL_MERCHANT = "00000000-0000-0000-0000-000000000000"
 ZP_REQ_URL = "https://sandbox.zarinpal.com/pg/v4/payment/request.json"
 ZP_START_PAY = "https://sandbox.zarinpal.com/pg/StartPay/"
 ZP_VERIFY_URL = "https://sandbox.zarinpal.com/pg/v4/payment/verify.json"
@@ -43,7 +43,7 @@ class TopUpRequest(BaseModel):
 def get_user_info():
     return user_db
 
-# ۱. درخواست شارژ کیف پول و اتصال به زرین‌پال
+# درخواست شارژ کیف پول و اتصال به زرین‌پال
 @app.post("/api/wallet/topup")
 def request_wallet_topup(data: TopUpRequest):
     if data.amount < 1000:
@@ -51,7 +51,7 @@ def request_wallet_topup(data: TopUpRequest):
     
     req_data = {
         "merchant_id": ZARINPAL_MERCHANT,
-        "amount": data.amount * 10, # تبدیل تومان به ریال برای زرین‌پال
+        "amount": data.amount * 10, # تبدیل تومان به ریال
         "callback_url": CALLBACK_URL,
         "description": "شارژ کیف پول باشگاه اعضای معجزه ذهن",
     }
@@ -71,17 +71,16 @@ def request_wallet_topup(data: TopUpRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail="خطا در ارتباط با درگاه بانکی.")
 
-# ۲. تایید پرداخت زرین‌پال (Callback)
+# تایید پرداخت زرین‌پال (Callback)
 @app.get("/api/wallet/verify")
 def verify_wallet_topup(Authority: str, Status: str):
     if Status == "OK":
-        # در حالت واقعی مبلغ از بانک استعلام می‌شود، اینجا برای دمو کیف پول را شارژ می‌کنیم
-        user_db["wallet_balance"] += 50000 # مبلغ تستی اضافه شده
+        user_db["wallet_balance"] += 50000 # شارژ موفق تستی
         return {"status": "success", "message": "شارژ کیف پول با موفقیت انجام شد!", "new_balance": user_db["wallet_balance"]}
     else:
         return {"status": "failed", "message": "پرداخت توسط کاربر لغو شد یا با خطا مواجه گردید."}
 
-# ۳. کسر از کیف پول در کافه‌ها
+# کسر از کیف پول در کافه‌ها
 @app.post("/api/pay")
 def pay_at_merchant(data: PaymentRequest):
     if data.merchant_code not in merchant_db:
